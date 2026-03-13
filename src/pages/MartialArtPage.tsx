@@ -8,10 +8,11 @@ export default function MartialArtPage() {
 
   if (!art) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: "var(--dark)" }}>
         <div className="text-center">
-          <p className="text-muted-foreground text-xl mb-4">Страница не найдена</p>
-          <Link to="/" className="text-fire hover:underline">← На главную</Link>
+          <p className="text-4xl mb-4">⚔️</p>
+          <p className="text-xl mb-4" style={{ color: "#555", fontFamily: "Oswald, sans-serif" }}>Страница не найдена</p>
+          <Link to="/" className="text-fire hover:underline text-sm" style={{ fontFamily: "IBM Plex Sans, sans-serif" }}>← На главную</Link>
         </div>
       </div>
     );
@@ -23,90 +24,97 @@ export default function MartialArtPage() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "var(--dark)" }}>
-
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b" style={{ backgroundColor: "rgba(10,10,10,0.95)", borderColor: "var(--fire)", backdropFilter: "blur(10px)" }}>
+      {/* NAV */}
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b" style={{ backgroundColor: "rgba(8,8,8,0.97)", borderColor: `${art.color}30`, backdropFilter: "blur(12px)" }}>
         <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 text-sm hover:text-fire transition-colors" style={{ color: "#999" }}>
+          <Link to="/" className="flex items-center gap-2 text-sm transition-colors hover:text-fire" style={{ color: "#666", fontFamily: "Oswald, sans-serif", letterSpacing: "0.08em" }}>
             <Icon name="ArrowLeft" size={16} />
-            <span style={{ fontFamily: "Oswald, sans-serif", letterSpacing: "0.1em" }}>БОЕВЫЕ ИСКУССТВА</span>
+            <span className="hidden sm:inline uppercase">Энциклопедия</span>
           </Link>
-          <span className="text-fire font-bold text-lg" style={{ fontFamily: "Oswald, sans-serif" }}>
-            {art.emoji} {art.nameEn}
-          </span>
+          <span className="font-bold text-lg" style={{ fontFamily: "Oswald, sans-serif", color: art.color }}>{art.emoji} {art.nameEn}</span>
+          <div className="flex items-center gap-2 text-xs" style={{ color: "#444" }}>
+            <span style={{ fontFamily: "Oswald, sans-serif" }}>{currentIndex + 1} / {martialArts.length}</span>
+          </div>
         </div>
       </nav>
 
-      {/* Hero */}
-      <section
-        className="pt-14 relative overflow-hidden"
-        style={{
-          background: `linear-gradient(135deg, #0A0A0A 0%, rgba(${art.color === "#FF5500" ? "255,85,0" : art.color === "#FFB800" ? "255,184,0" : art.color === "#FF2200" ? "255,34,0" : art.color === "#FF6600" ? "255,102,0" : art.color === "#0099FF" ? "0,153,255" : "0,204,102"},0.15) 50%, #0A0A0A 100%)`,
-          minHeight: "320px",
-        }}
-      >
-        <div className="max-w-6xl mx-auto px-4 py-16 flex items-end gap-8 relative z-10">
-          <div className="text-8xl select-none" style={{ filter: "drop-shadow(0 0 30px rgba(255,85,0,0.5))" }}>
+      {/* HERO */}
+      <section className="pt-14 relative overflow-hidden" style={{ minHeight: "380px" }}>
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${art.image})`, filter: "brightness(0.18) saturate(1.3)" }} />
+        <div className="absolute inset-0" style={{ background: `linear-gradient(135deg, rgba(8,8,8,0.8) 0%, ${art.color}18 50%, rgba(8,8,8,0.9) 100%)` }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 50%, var(--dark) 100%)" }} />
+
+        <div className="relative z-10 max-w-6xl mx-auto px-4 py-16 flex items-end gap-8">
+          <div className="text-8xl select-none hidden md:block shrink-0" style={{ filter: `drop-shadow(0 0 30px ${art.color}80)` }}>
             {art.emoji}
           </div>
           <div>
-            <p className="text-xs uppercase tracking-widest mb-2" style={{ color: art.color }}>
-              {art.origin}
-            </p>
-            <h1
-              className="text-6xl md:text-8xl font-black uppercase leading-none mb-4"
-              style={{
-                fontFamily: "Oswald, sans-serif",
-                color: "white",
-                textShadow: `0 0 60px ${art.color}40`,
-              }}
-            >
+            <div className="flex items-center gap-3 mb-3 flex-wrap">
+              <span className="region-badge" style={{ backgroundColor: `${art.color}20`, border: `1px solid ${art.color}50`, color: art.color }}>{art.category}</span>
+              <span className="text-xl">{art.country}</span>
+              <span className="text-xs" style={{ color: "#555", fontFamily: "IBM Plex Sans, sans-serif" }}>{art.origin}</span>
+            </div>
+            <h1 className="font-black uppercase leading-none mb-3" style={{ fontFamily: "Oswald, sans-serif", fontSize: "clamp(2.5rem, 7vw, 5.5rem)", color: "white", textShadow: `0 0 60px ${art.color}30` }}>
               {art.nameEn}
             </h1>
-            <p className="text-xl italic" style={{ color: "#aaa", fontFamily: "IBM Plex Sans, sans-serif" }}>
-              «{art.tagline}»
-            </p>
+            <p className="text-2xl font-light mb-3" style={{ color: art.color, fontFamily: "Oswald, sans-serif" }}>{art.name}</p>
+            <p className="text-lg italic" style={{ color: "#666", fontFamily: "IBM Plex Sans, sans-serif" }}>«{art.tagline}»</p>
           </div>
         </div>
-
-        {/* Decorative line */}
-        <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: `linear-gradient(to right, transparent, ${art.color}, transparent)` }} />
+        <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: `linear-gradient(to right, transparent, ${art.color}60, transparent)` }} />
       </section>
 
       <div className="max-w-6xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-          {/* Main content */}
-          <div className="lg:col-span-2 space-y-10">
-
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+          {/* MAIN */}
+          <div className="lg:col-span-2 space-y-12">
             {/* History */}
             <section>
               <h2 className="text-3xl font-bold uppercase mb-6 flex items-center gap-3" style={{ fontFamily: "Oswald, sans-serif", color: "white" }}>
-                <span className="w-1 h-8 rounded" style={{ backgroundColor: art.color, display: "inline-block", flexShrink: 0 }} />
+                <span className="accent-bar h-8" style={{ backgroundColor: art.color }} />
                 История создания
               </h2>
-              <div className="space-y-4">
-                {art.history.map((paragraph, i) => (
-                  <p key={i} className="leading-relaxed" style={{ color: "#ccc", fontFamily: "IBM Plex Sans, sans-serif", fontSize: "1rem" }}>
-                    {paragraph}
-                  </p>
+              <div className="space-y-5">
+                {art.history.map((p, i) => (
+                  <div key={i} className="flex gap-4">
+                    <span className="text-xs font-black shrink-0 mt-1 w-6" style={{ color: `${art.color}60`, fontFamily: "Oswald, sans-serif" }}>{String(i + 1).padStart(2, "0")}</span>
+                    <p className="leading-relaxed" style={{ color: "#ccc", fontFamily: "IBM Plex Sans, sans-serif", fontSize: "0.97rem" }}>{p}</p>
+                  </div>
                 ))}
+              </div>
+            </section>
+
+            {/* Photo */}
+            <section>
+              <h2 className="text-3xl font-bold uppercase mb-6 flex items-center gap-3" style={{ fontFamily: "Oswald, sans-serif", color: "white" }}>
+                <span className="accent-bar h-8" style={{ backgroundColor: art.color }} />
+                Фотография
+              </h2>
+              <div className="rounded-lg overflow-hidden border" style={{ borderColor: "#1e1e1e" }}>
+                <img
+                  src={art.image}
+                  alt={art.name}
+                  className="w-full object-cover"
+                  style={{ maxHeight: "400px", filter: "brightness(0.85) saturate(1.1)" }}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "https://cdn.poehali.dev/projects/205c1f99-983e-4aad-8bcf-c32f5032ee69/files/f8b18786-19bd-4cea-b724-2e6c5cac88c1.jpg";
+                  }}
+                />
+                <div className="p-3 text-xs" style={{ backgroundColor: "var(--dark-card)", color: "#444", fontFamily: "IBM Plex Sans, sans-serif" }}>{art.name} · {art.origin}</div>
               </div>
             </section>
 
             {/* Rules */}
             <section>
               <h2 className="text-3xl font-bold uppercase mb-6 flex items-center gap-3" style={{ fontFamily: "Oswald, sans-serif", color: "white" }}>
-                <span className="w-1 h-8 rounded" style={{ backgroundColor: art.color, display: "inline-block", flexShrink: 0 }} />
+                <span className="accent-bar h-8" style={{ backgroundColor: art.color }} />
                 Правила и особенности
               </h2>
               <div className="space-y-3">
                 {art.rules.map((rule, i) => (
                   <div key={i} className="flex gap-4 p-4 rounded-lg border" style={{ backgroundColor: "var(--dark-card)", borderColor: "#1e1e1e" }}>
-                    <span className="text-lg font-black shrink-0 w-8 text-center" style={{ color: art.color, fontFamily: "Oswald, sans-serif" }}>
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <p style={{ color: "#ddd", fontFamily: "IBM Plex Sans, sans-serif" }}>{rule}</p>
+                    <span className="text-lg font-black shrink-0 w-8 text-center" style={{ color: art.color, fontFamily: "Oswald, sans-serif" }}>{String(i + 1).padStart(2, "0")}</span>
+                    <p style={{ color: "#ddd", fontFamily: "IBM Plex Sans, sans-serif", fontSize: "0.95rem" }}>{rule}</p>
                   </div>
                 ))}
               </div>
@@ -115,7 +123,7 @@ export default function MartialArtPage() {
             {/* Video */}
             <section>
               <h2 className="text-3xl font-bold uppercase mb-6 flex items-center gap-3" style={{ fontFamily: "Oswald, sans-serif", color: "white" }}>
-                <span className="w-1 h-8 rounded" style={{ backgroundColor: art.color, display: "inline-block", flexShrink: 0 }} />
+                <span className="accent-bar h-8" style={{ backgroundColor: art.color }} />
                 Видео — техники и бои
               </h2>
               <div className="rounded-lg overflow-hidden border" style={{ borderColor: "#1e1e1e" }}>
@@ -123,7 +131,7 @@ export default function MartialArtPage() {
                   <iframe
                     className="absolute inset-0 w-full h-full"
                     src={`https://www.youtube.com/embed/${art.videoId}?rel=0&modestbranding=1`}
-                    title={art.videoTitle}
+                    title={`${art.name} — видео`}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                   />
@@ -132,76 +140,82 @@ export default function MartialArtPage() {
             </section>
           </div>
 
-          {/* Sidebar — Legends */}
+          {/* SIDEBAR */}
           <div className="space-y-6">
-            <h2 className="text-3xl font-bold uppercase flex items-center gap-3" style={{ fontFamily: "Oswald, sans-serif", color: "white" }}>
-              <span className="w-1 h-8 rounded" style={{ backgroundColor: art.color, display: "inline-block", flexShrink: 0 }} />
-              Легенды
-            </h2>
-            {art.legends.map((legend, i) => (
-              <div
-                key={i}
-                className="p-5 rounded-lg border transition-all duration-300"
-                style={{ backgroundColor: "var(--dark-card)", borderColor: "#1e1e1e" }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor = art.color;
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor = "#1e1e1e";
-                }}
-              >
-                <div className="flex items-start gap-3 mb-3">
-                  <div className="w-10 h-10 rounded flex items-center justify-center text-lg shrink-0" style={{ backgroundColor: `${art.color}20`, border: `1px solid ${art.color}40` }}>
-                    {["🥇", "🥈", "🥉"][i]}
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-white text-lg leading-tight" style={{ fontFamily: "Oswald, sans-serif" }}>
-                      {legend.name}
-                    </h3>
-                    <p className="text-xs" style={{ color: art.color }}>{legend.years}</p>
-                  </div>
+            {/* Quick info */}
+            <div className="p-5 rounded-lg border" style={{ backgroundColor: "var(--dark-card)", borderColor: `${art.color}30` }}>
+              <h3 className="text-sm uppercase tracking-widest mb-4" style={{ color: art.color, fontFamily: "Oswald, sans-serif" }}>Информация</h3>
+              {[
+                { label: "Страна", value: `${art.country} ${art.origin}` },
+                { label: "Категория", value: art.category },
+                { label: "Раздел", value: `${currentIndex + 1} из ${martialArts.length}` },
+              ].map((item) => (
+                <div key={item.label} className="flex justify-between items-center py-2 border-b" style={{ borderColor: "#1e1e1e" }}>
+                  <span className="text-xs uppercase tracking-widest" style={{ color: "#555", fontFamily: "Oswald, sans-serif" }}>{item.label}</span>
+                  <span className="text-sm text-right" style={{ color: "#ccc", fontFamily: "IBM Plex Sans, sans-serif" }}>{item.value}</span>
                 </div>
-                <p className="text-sm leading-relaxed" style={{ color: "#aaa", fontFamily: "IBM Plex Sans, sans-serif" }}>
-                  {legend.achievement}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
 
-            {/* Back to main */}
+            {/* Legends */}
+            <div>
+              <h2 className="text-2xl font-bold uppercase mb-4 flex items-center gap-3" style={{ fontFamily: "Oswald, sans-serif", color: "white" }}>
+                <span className="accent-bar h-7" style={{ backgroundColor: art.color }} />
+                Легенды
+              </h2>
+              <div className="space-y-4">
+                {art.legends.map((legend, i) => (
+                  <div
+                    key={i}
+                    className="p-4 rounded-lg border transition-all duration-250"
+                    style={{ backgroundColor: "var(--dark-card)", borderColor: "#1e1e1e" }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = art.color; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#1e1e1e"; }}
+                  >
+                    <div className="flex items-start gap-3 mb-2">
+                      <div className="w-9 h-9 rounded flex items-center justify-center text-base shrink-0" style={{ backgroundColor: `${art.color}20`, border: `1px solid ${art.color}40` }}>
+                        {["🥇", "🥈", "🥉"][i] ?? "🏆"}
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-white leading-tight" style={{ fontFamily: "Oswald, sans-serif", fontSize: "1rem" }}>{legend.name}</h3>
+                        <p className="text-xs" style={{ color: art.color }}>{legend.years}</p>
+                      </div>
+                    </div>
+                    <p className="text-sm leading-relaxed" style={{ color: "#888", fontFamily: "IBM Plex Sans, sans-serif" }}>{legend.achievement}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Back */}
             <Link
               to="/"
-              className="flex items-center gap-2 p-4 rounded-lg border text-center justify-center transition-all duration-300 w-full"
-              style={{ backgroundColor: "var(--dark-card)", borderColor: "#1e1e1e", color: "#999" }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.borderColor = "var(--fire)";
-                (e.currentTarget as HTMLElement).style.color = "var(--fire)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.borderColor = "#1e1e1e";
-                (e.currentTarget as HTMLElement).style.color = "#999";
-              }}
+              className="flex items-center gap-2 p-4 rounded-lg border justify-center transition-all duration-250 w-full"
+              style={{ backgroundColor: "var(--dark-card)", borderColor: "#1e1e1e", color: "#666", fontFamily: "Oswald, sans-serif", letterSpacing: "0.1em", fontSize: "0.85rem" }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--fire)"; (e.currentTarget as HTMLElement).style.color = "var(--fire)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#1e1e1e"; (e.currentTarget as HTMLElement).style.color = "#666"; }}
             >
-              <Icon name="Grid2X2" size={16} />
-              <span style={{ fontFamily: "Oswald, sans-serif", letterSpacing: "0.1em", fontSize: "0.9rem" }}>ВСЕ БОЕВЫЕ ИСКУССТВА</span>
+              <Icon name="Grid2X2" size={15} />
+              ВСЕ БОЕВЫЕ ИСКУССТВА
             </Link>
           </div>
         </div>
 
-        {/* Prev / Next navigation */}
+        {/* Prev / Next */}
         <div className="mt-16 pt-8 border-t grid grid-cols-2 gap-4" style={{ borderColor: "#1e1e1e" }}>
           <div>
             {prevArt && (
               <Link
-                to={`/${prevArt.id}`}
-                className="flex items-center gap-3 p-4 rounded-lg border transition-all duration-300 group"
+                to={`/art/${prevArt.id}`}
+                className="flex items-center gap-3 p-4 rounded-lg border transition-all duration-250"
                 style={{ backgroundColor: "var(--dark-card)", borderColor: "#1e1e1e" }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--fire)"; }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = prevArt.color; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#1e1e1e"; }}
               >
                 <Icon name="ChevronLeft" size={20} className="text-fire shrink-0" />
                 <div>
-                  <p className="text-xs mb-0.5" style={{ color: "#666" }}>Предыдущее</p>
-                  <p className="font-bold" style={{ fontFamily: "Oswald, sans-serif", color: "white" }}>{prevArt.emoji} {prevArt.nameEn}</p>
+                  <p className="text-xs mb-0.5" style={{ color: "#444" }}>Предыдущее</p>
+                  <p className="font-bold text-white" style={{ fontFamily: "Oswald, sans-serif" }}>{prevArt.emoji} {prevArt.nameEn}</p>
                 </div>
               </Link>
             )}
@@ -209,15 +223,15 @@ export default function MartialArtPage() {
           <div>
             {nextArt && (
               <Link
-                to={`/${nextArt.id}`}
-                className="flex items-center gap-3 p-4 rounded-lg border transition-all duration-300 justify-end text-right"
+                to={`/art/${nextArt.id}`}
+                className="flex items-center gap-3 p-4 rounded-lg border transition-all duration-250 justify-end text-right"
                 style={{ backgroundColor: "var(--dark-card)", borderColor: "#1e1e1e" }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--fire)"; }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = nextArt.color; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#1e1e1e"; }}
               >
                 <div>
-                  <p className="text-xs mb-0.5" style={{ color: "#666" }}>Следующее</p>
-                  <p className="font-bold" style={{ fontFamily: "Oswald, sans-serif", color: "white" }}>{nextArt.emoji} {nextArt.nameEn}</p>
+                  <p className="text-xs mb-0.5" style={{ color: "#444" }}>Следующее</p>
+                  <p className="font-bold text-white" style={{ fontFamily: "Oswald, sans-serif" }}>{nextArt.emoji} {nextArt.nameEn}</p>
                 </div>
                 <Icon name="ChevronRight" size={20} className="text-fire shrink-0" />
               </Link>
